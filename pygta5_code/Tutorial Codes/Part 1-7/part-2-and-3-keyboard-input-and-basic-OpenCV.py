@@ -2,7 +2,7 @@ import numpy as np
 from PIL import ImageGrab
 import cv2
 import time
-import pyautogui
+# import pyautogui
 from directkeys import PressKey, W, A, S, D
 
 def process_img(image):
@@ -22,7 +22,7 @@ def main():
     last_time = time.time()
     while True:
         PressKey(W)
-        screen =  np.array(ImageGrab.grab(bbox=(0,40,800,640)))
+        screen =  np.array(ImageGrab.grab(bbox=(7,31,807,481)))
         #print('Frame took {} seconds'.format(time.time()-last_time))
         last_time = time.time()
         new_screen = process_img(screen)
@@ -31,3 +31,5 @@ def main():
         if cv2.waitKey(25) & 0xFF == ord('q'):
             cv2.destroyAllWindows()
             break
+
+main()

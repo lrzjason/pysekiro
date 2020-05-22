@@ -3,16 +3,7 @@ from PIL import ImageGrab
 import cv2
 import time
 from directkeys import ReleaseKey, PressKey, W, A, S, D
-import pyautogui
-
-
-def draw_lines(img, lines):
-    try:
-        for line in lines:
-            coords = line[0]
-            cv2.line(img, (coords[0],coords[1]), (coords[2],coords[3]), [255,255,255], 3)
-    except:
-        pass
+# import pyautogui
 
 
 def roi(img, vertices):
@@ -21,24 +12,18 @@ def roi(img, vertices):
     masked = cv2.bitwise_and(img, mask)
     return masked
 
-
 def process_img(original_image):
     processed_img = cv2.cvtColor(original_image, cv2.COLOR_BGR2GRAY)
     processed_img = cv2.Canny(processed_img, threshold1=200, threshold2=300)
-    processed_img = cv2.GaussianBlur(processed_img, (3,3), 0 )
     vertices = np.array([[10,500],[10,300], [300,200], [500,200], [800,300], [800,500]], np.int32)
     processed_img = roi(processed_img, [vertices])
-
-    #                       edges
-    lines = cv2.HoughLinesP(processed_img, 1, np.pi/180, 180, 20, 15)
-    draw_lines(processed_img,lines)
     return processed_img
 
 
 def main():
     last_time = time.time()
     while(True):
-        screen =  np.array(ImageGrab.grab(bbox=(0,40, 800, 640)))
+        screen =  np.array(ImageGrab.grab(bbox=(7,31,807,481)))
         new_screen = process_img(screen)
         print('Loop took {} seconds'.format(time.time()-last_time))
         last_time = time.time()
